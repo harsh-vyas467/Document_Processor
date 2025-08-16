@@ -1,0 +1,14 @@
+// JSON
+Extract: company_name, address, invoice_number, total_amount
+Format dates as MM/DD/YYYY
+Translate to {target_language}
+
+// Translation
+Use casual language for translation
+Add "Confidential" watermark concept
+Preserve currency symbols
+
+// Summary
+Bullet point format with emojis
+Highlight payment deadline
+Include contact information
