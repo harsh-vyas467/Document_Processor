@@ -5,10 +5,16 @@ Translate to {target_language}
 
 // Translation
 Use casual language for translation
-Add "Confidential" watermark concept
 Preserve currency symbols
 
 // Summary
 Bullet point format with emojis
 Highlight payment deadline
 Include contact information
+
+
+----------
+
+//JSON
+Return JSON: { "invoice_number": "value", "total": "value" }
+Text: {text}

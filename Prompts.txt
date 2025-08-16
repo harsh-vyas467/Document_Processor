@@ -54,21 +54,39 @@ Document text:
 """
 
 
----
-
-Prompt for Both
-
-We simply call both prompts sequentially — JSON first, PDF translation second.
+-------------------
+Prompt for Summary
 
 ---
+f"""
+You are a professional summarizer.
 
-if user_choice == "json":
-    # Call Gemini with prompt_json
-    # Save result as .json file
+Instructions:
+1. Detect the document's original language automatically.
+2. Generate a **detailed summary** in {target_language}.
+3. Do not omit important details (names, dates, amounts).
+4. Keep the summary concise but complete.
 
-elif user_choice == "pdf":
-    # Call Gemini with prompt_translate
-    # Rebuild PDF with translated text in same positions
+Document text:
+{text}
+"""
 
-elif user_choice == "both":
-    # Call both prompts and save files
+---------
+Prompt to detect language of document
+---------
+f"""
+Please analyze the following document text and detect its original language.
+
+Instructions:
+1. Identify the language of the text.
+2. Provide the result in JSON format:
+{{
+    "detected_language": "ISO language code (e.g., 'ja', 'zh', 'ko', 'en')",
+    "confidence": float_between_0_and_1
+}}
+
+3. Only include the JSON object in your response.
+
+Document text:
+{text}
+"""

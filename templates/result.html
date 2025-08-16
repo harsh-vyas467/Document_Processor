@@ -84,9 +84,6 @@
     <div class="summary">
       <h3>Summary</h3>
       <p>{{ summary }}</p>
-      <a href="{{ url_for('download_file', filename=summary_filename) }}" class="downloads a">
-        📄 Download Summary ({{ summary_format|upper }})
-      </a>
     </div>
     {% endif %}
 

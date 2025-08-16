@@ -95,7 +95,7 @@ Instructions:
 1. Identify the language of the text.
 2. Provide the result in JSON format:
 {{
-    "detected_language": "ISO language code (e.g., 'ja', 'zh', 'ko', 'en')",
+    "detected_language": "A string containing the full name of the language followed by its ISO 639-1 code in parentheses (e.g., "Japanese (ja)", "Chinese (zh)", "Korean (ko)", "English (en)")",
     "confidence": float_between_0_and_1
 }}
 
