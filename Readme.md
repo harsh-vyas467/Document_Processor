@@ -1,3 +1,19 @@
+Built an AI-powered multilingual document processor that extracts structured data, translates content, and summarizes PDFs with customizable user instructions.
+
+Key features:
+- Language detection with confidence scoring
+- Customizable JSON extraction
+- Layout-preserving PDF translation
+- Summarization in TXT/PDF formats
+- User-customizable processing prompts
+- Multi-format output generation
+- Secure file handling
+- Gemini AI integration
+
+The system automatically detects document language, extracts entities, translates while preserving formatting, and generates summaries - all with optional user-specified processing rules for each output type.
+
+
+---------------------------------------------------------------------------------------------------------------
 
 pip install -r requirements.txt
 
@@ -8,7 +24,7 @@ pip install flask google-generativeai PyMuPDF pdfplumber reportlab PyPDF2 python
 
 --
 
-setx GEMINI_API_KEY "<Enter Google api key here>"
+setx GEMINI_API_KEY "<EnterGoogleApiKeyHere>"
 --
 
 Available Gemini Models :
