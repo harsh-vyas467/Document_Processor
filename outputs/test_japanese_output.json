@@ -1,0 +1,26 @@
+{
+  "doc_type": "invoice",
+  "metadata": {
+    "detected_language": "ja",
+    "confidence": 0.99
+  },
+  "entities": {
+    "company_name": "株式会社サンプル",
+    "company_address": "東京都渋谷区道玄坂1-2-3",
+    "company_phone": "03-1234-5678",
+    "invoice_number": "INV-2024-JP-001",
+    "issue_date": "2024年3月15日",
+    "due_date": "2024年4月15日",
+    "item_1_description": "ノートパソコン",
+    "item_1_quantity": "2",
+    "item_1_unit_price": "150,000円",
+    "item_1_amount": "300,000円",
+    "item_2_description": "モニター",
+    "item_2_quantity": "3",
+    "item_2_unit_price": "50,000円",
+    "item_2_amount": "150,000円",
+    "total_amount": "450,000円",
+    "notes": "この請求書はテスト用です。実際の支払いは必要ありません。"
+  },
+  "full_translated_text": "Test document\nCompany information:\nCompany name: 株式会社サンプル\nAddress: 1-2-3 Dogenzaka, Shibuya-ku, Tokyo\nPhone: 03-1234-5678\nInvoice number: INV-2024-JP-001\nIssue date: March 15, 2024\nDue date: April 15, 2024\nItem details:\nItem 1: Laptop - Quantity: 2 units - Unit price: 150,000 yen - Amount: 300,000 yen\nItem 2: Monitor - Quantity: 3 units - Unit price: 50,000 yen - Amount: 150,000 yen\nTotal amount: 450,000 yen\nRemarks: This invoice is for testing purposes. No actual payment is required."
+}

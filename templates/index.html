@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document Processor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background: #f9f9f9;
+    }
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-size: 1.2rem;
+      color: #444;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 8px;
+      margin-top: 20px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 6px;
+    }
+    input[type="file"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    textarea {
+      min-height: 80px;
+      font-family: monospace;
+      font-size: 0.9rem;
+    }
+    .checkbox-group {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 6px;
+      border: 1px solid #eee;
+    }
+    .output-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .output-option {
+      background: white;
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
+      padding: 12px;
+      flex: 1;
+      min-width: 120px;
+    }
+    .output-option label {
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .summary-options {
+      margin-top: 10px;
+      padding-left: 25px;
+    }
+    .summary-options label {
+      font-weight: normal;
+      display: inline-flex;
+      align-items: center;
+      margin-right: 15px;
+      gap: 5px;
+    }
+    button {
+      padding: 12px 20px;
+      background: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background 0.3s;
+      margin-top: 20px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .file-input-wrapper {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      width: 100%;
+    }
+    .file-input-wrapper input[type="file"] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      cursor: pointer;
+      height: 100%;
+    }
+    .file-input-custom {
+      background: #e9ecef;
+      border: 1px dashed #ced4da;
+      border-radius: 4px;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .file-input-custom:hover {
+      background: #dee2e6;
+    }
+    .filename-display {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: #495057;
+    }
+    .custom-instructions {
+      background: #f0f9ff;
+      border-left: 4px solid #007BFF;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 0 4px 4px 0;
+    }
+    .custom-instructions label {
+      font-weight: normal;
+      font-size: 0.9rem;
+      color: #555;
+    }
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 15px 0;
+    }
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #007BFF;
+    }
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+    .instructions-hint {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 5px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Document Processor</h1>
+    <form action="/" method="POST" enctype="multipart/form-data">
+      <!-- File upload -->
+      <div class="form-group">
+        <label>Upload PDF Document:</label>
+        <div class="file-input-wrapper">
+          <div class="file-input-custom">
+            Choose File
+          </div>
+          <input type="file" name="file" id="fileInput" accept="application/pdf" required>
+        </div>
+        <div class="filename-display" id="filenameDisplay">No file selected</div>
+      </div>
+
+      <!-- Language selection -->
+      <div class="form-group">
+        <label for="target_language">Target Language:</label>
+        <select name="target_language" id="target_language" required>
+          {% for code, name in languages.items() %}
+            <option value="{{ code }}">{{ name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Custom Instructions Toggle -->
+      <div class="toggle-container">
+        <div class="toggle-switch">
+          <input type="checkbox" id="customInstructionsToggle">
+          <span class="slider"></span>
+        </div>
+        <label for="customInstructionsToggle">Enable Custom Instructions</label>
+      </div>
+
+      <!-- Outputs selection -->
+      <div class="form-group">
+        <label>Select Outputs:</label>
+        <div class="checkbox-group">
+          <div class="output-options">
+            <div class="output-option">
+              <label>
+                <input type="checkbox" name="outputs" value="json" id="jsonCheckbox"> 
+                JSON Output
+              </label>
+              <div class="custom-instructions" id="jsonInstructions" style="display:none;">
+                <label for="custom_json_instructions">Custom JSON Instructions:</label>
+                <textarea name="custom_json_instructions" id="custom_json_instructions" placeholder="Example: Extract only name, address, and invoice amount. Format dates as YYYY-MM-DD."></textarea>
+                <div class="instructions-hint">
+                  Use placeholders: {text} for document text, {target_language} for language
+                </div>
+              </div>
+            </div>
+            
+            <div class="output-option">
+              <label>
+                <input type="checkbox" name="outputs" value="pdf" id="pdfCheckbox"> 
+                Translated PDF
+              </label>
+              <div class="custom-instructions" id="pdfInstructions" style="display:none;">
+                <label for="custom_pdf_instructions">Custom Translation Instructions:</label>
+                <textarea name="custom_pdf_instructions" id="custom_pdf_instructions" placeholder="Example: Use formal business language. Preserve technical terms in English."></textarea>
+                <div class="instructions-hint">
+                  Use placeholders: {text} for document text, {target_language} for language
+                </div>
+              </div>
+            </div>
+            
+            <div class="output-option">
+              <label>
+                <input type="checkbox" name="outputs" value="summary" id="summaryCheckbox"> 
+                Summary
+              </label>
+              <div class="custom-instructions" id="summaryInstructions" style="display:none;">
+                <label for="custom_summary_instructions">Custom Summary Instructions:</label>
+                <textarea name="custom_summary_instructions" id="custom_summary_instructions" placeholder="Example: Focus on financial figures and dates. Include all names and amounts."></textarea>
+                <div class="instructions-hint">
+                  Use placeholders: {text} for document text, {target_language} for language
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Summary format options -->
+          <div class="summary-options" id="summaryOptions" style="display:none;">
+            <h3>Summary Format:</h3>
+            <label>
+              <input type="radio" name="summary_format" value="txt" checked> 
+              TXT
+            </label>
+            <label>
+              <input type="radio" name="summary_format" value="pdf"> 
+              PDF
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit">Process Document</button>
+    </form>
+  </div>
+
+  <script>
+    // Show selected filename
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+      const fileName = e.target.files[0] ? e.target.files[0].name : 'No file selected';
+      document.getElementById('filenameDisplay').textContent = fileName;
+    });
+
+    // Show/hide summary format options
+    const summaryCheckbox = document.getElementById('summaryCheckbox');
+    const summaryOptions = document.getElementById('summaryOptions');
+    
+    summaryCheckbox.addEventListener('change', function() {
+      summaryOptions.style.display = this.checked ? 'block' : 'none';
+      toggleCustomInstructions();
+    });
+
+    // Toggle custom instructions
+    const customToggle = document.getElementById('customInstructionsToggle');
+    
+    function toggleCustomInstructions() {
+      const isEnabled = customToggle.checked;
+      
+      // Toggle JSON instructions
+      if (document.getElementById('jsonCheckbox').checked && isEnabled) {
+        document.getElementById('jsonInstructions').style.display = 'block';
+      } else {
+        document.getElementById('jsonInstructions').style.display = 'none';
+      }
+      
+      // Toggle PDF instructions
+      if (document.getElementById('pdfCheckbox').checked && isEnabled) {
+        document.getElementById('pdfInstructions').style.display = 'block';
+      } else {
+        document.getElementById('pdfInstructions').style.display = 'none';
+      }
+      
+      // Toggle Summary instructions
+      if (document.getElementById('summaryCheckbox').checked && isEnabled) {
+        document.getElementById('summaryInstructions').style.display = 'block';
+      } else {
+        document.getElementById('summaryInstructions').style.display = 'none';
+      }
+    }
+
+    // Set up event listeners
+    customToggle.addEventListener('change', toggleCustomInstructions);
+    document.getElementById('jsonCheckbox').addEventListener('change', toggleCustomInstructions);
+    document.getElementById('pdfCheckbox').addEventListener('change', toggleCustomInstructions);
+    document.getElementById('summaryCheckbox').addEventListener('change', toggleCustomInstructions);
+  </script>
+</body>
+</html>
