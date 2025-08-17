@@ -1,26 +1,4 @@
 {
-  "doc_type": "invoice",
-  "metadata": {
-    "detected_language": "ja",
-    "confidence": 0.99
-  },
-  "entities": {
-    "company_information": "Company Information:",
-    "company_name": "Sample Co., Ltd.",
-    "address": "1-2-3 Dogenzaka, Shibuya-ku, Tokyo",
-    "phone_number": "03-1234-5678",
-    "invoice_number": "INV-2024-JP-001",
-    "issue_date": "March 15, 2024",
-    "payment_due_date": "April 15, 2024",
-    "item_details": "Item Details:",
-    "item_1": "Laptop - Quantity: 2 units - Unit Price: 150,000 yen - Amount: 300,000 yen",
-    "item_2": "Monitor - Quantity: 3 units - Unit Price: 50,000 yen - Amount: 150,000 yen",
-    "total_amount": "450,000 yen",
-    "remarks": "Remarks:",
-    "remark_text": "This invoice is for testing purposes. No actual payment is required. The important points are as follows:",
-    "point_1": "1. This is a sample document for system testing.",
-    "point_2": "2. No actual payment is required.",
-    "point_3": "3. If you have any questions, please contact support."
-  },
-  "full_translated_text": "Test document\nCompany Information:\nCompany Name: Sample Co., Ltd.\nAddress: 1-2-3 Dogenzaka, Shibuya-ku, Tokyo\nPhone: 03-1234-5678\nInvoice Number: INV-2024-JP-001\nIssue Date: March 15, 2024\nPayment Due Date: April 15, 2024\nItem Details:\nItem 1: Laptop - Quantity: 2 units - Unit Price: 150,000 yen - Amount: 300,000 yen\nItem 2: Monitor - Quantity: 3 units - Unit Price: 50,000 yen - Amount: 150,000 yen\nTotal Amount: 450,000 yen\nRemarks:\nThis invoice is for testing purposes. No actual payment is required. The important points are as follows:\n1. This is a sample document for system testing\n2. No actual payment is required\n3. If you have any questions, please contact support"
+  "invoice_number": "INV-2024-JP-001",
+  "total": "450,000"
 }
