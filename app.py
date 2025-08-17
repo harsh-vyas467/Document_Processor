@@ -33,27 +33,35 @@ def prompt_json(text, target_language):
     return f"""
 Please analyze the following document text.
 
-Instructions:
+CRITICAL INSTRUCTIONS:
 1. Detect the original language automatically.
-2. Translate all text into {target_language}.
-3. Provide the result in this exact JSON format (valid JSON, no extra text outside the JSON):
+2. Translate ALL text (including both keys and values) into {target_language}.
+3. Provide the result in this exact JSON format:
 
 {{
-  "doc_type": "auto-detected document type (e.g., invoice, contract, letter, etc.)",
+  "doc_type": "auto-detected document type in {target_language}",
   "metadata": {{
-    "detected_language": "ISO language code (e.g., 'ja', 'zh', 'ko', 'en')",
+    "detected_language": "ISO language code (e.g., 'ja')",
     "confidence": float_between_0_and_1
   }},
   "entities": {{
-    // Extract all identifiable information as key-value pairs
-    // Use descriptive keys written in {target_language}
+    // Extract all identifiable information
+    // KEYS must be in {target_language}
+    // VALUES must be in {target_language}
+    // Example for English: "company_name": "Example Inc."
   }},
-  "full_translated_text": "Full translation of the document in {target_language}"
+  "full_translated_text": "Full translation in {target_language}"
 }}
 
-4. Preserve numbers, dates, and currency formats exactly as in the original.
-5. If any content is unreadable, replace it with "[unreadable]".
-6. Include all readable information from the document without summarizing or omitting.
+4. PRESERVE FORMATTING:
+   - Keep numbers, dates, and currency formats unchanged
+   - Maintain original document structure
+   - Replace unreadable content with "[unreadable]"
+
+5. TRANSLATION RULES:
+   - Translate every text element including headers, labels, and values
+   - Do not leave any text in the original language
+   - Ensure keys are descriptive and in {target_language}
 
 Document text:
 {text}
