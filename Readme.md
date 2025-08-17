@@ -54,3 +54,8 @@ BLOCK_LOW_AND_ABOVE: Block content that is likely to be a low-risk or higher.
 BLOCK_MEDIUM_AND_ABOVE: Block content that is likely to be a medium-risk or higher.
 
 BLOCK_ONLY_HIGH: Block content that is likely to be a high-risk only.
+
+---------------
+![alt text](processingworkflow.png)
+
+--------------
